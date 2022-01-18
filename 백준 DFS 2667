@@ -1,0 +1,33 @@
+import sys
+n = int(sys.stdin.readline())
+
+graph = [list(map(int, list(sys.stdin.readline().strip()))) for _ in range(n)]
+cnt = 0
+cnt_list = []
+
+def dfs(x, y):
+    num = 0
+    if x<0 or x>=n or y<0 or y>= n:
+        return 0
+    if graph[x][y] == 1:
+        graph[x][y] = 0
+        num += 1
+        num += dfs(x - 1, y)
+        num += dfs(x + 1, y)
+        num += dfs(x, y + 1)
+        num += dfs(x, y - 1)
+        return num
+    return 0
+  
+for x in range(n):
+    for y in range(n):
+        if graph[x][y] == 1:
+            num = 0
+            cnt += 1
+            cnt_list.append(dfs(x,y))
+
+cnt_list.sort()
+
+print(cnt)
+for item in cnt_list:
+    print(item)
