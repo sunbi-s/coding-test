@@ -1,0 +1,26 @@
+# 핵심은 울음소리 탑을 쌓는 것이고 순서대로 쌓기위해선 탑이 몇개 필요한지가 핵심
+T = int(input())
+
+for case_num in range(1, T + 1):
+    error =False
+    test_case = input()
+    match = { 'c' : 0 , 'r' : 1 , 'o' : 2, 'a' : 3, 'k' : 4}
+    tower = [0]  
+    for char in test_case:
+        for i in range(len(tower)):
+            if tower[i] % 5 == match[char]: #앞에서 부터 쌓인 갯수 확인
+                tower[i] += 1 # 순서가 맞으면 1개 쌓아줌
+                break;
+        else:
+            if char == 'c':
+                tower.append(1)
+            else:
+                error = True
+                break
+    answer = len(tower) # 공간 사이즈가 최소 개구리 수
+    for i in tower: #미완성 케이스
+        if i % 5 != 0:
+            error = True
+    if error: # 에러인 경우 답 -1
+        answer = -1
+    print(f'#{case_num} {answer} ')
