@@ -1,0 +1,35 @@
+import sys
+import heapq
+input = sys.stdin.readline # 함수 변수에 저장
+
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
+
+def dijkstra():
+    distance = [float('inf')] * (n * n)
+    distance[0] = rupee_map[0][0]
+    min_heapq = []
+    heapq.heappush(min_heapq, [rupee_map[0][0], 0, 0])
+    while min_heapq:
+        dis, y, x = heapq.heappop(min_heapq)
+        node = y * n + x
+        for i in range(len(dx)): # 방향 갯수 일반화
+            nx = x + dx[i]
+            ny = y + dy[i]
+            next_node = ny * n + nx
+            if 0 <= ny < n and 0 <= nx < n:
+                new_dis = dis + rupee_map[ny][nx]
+                if new_dis < distance[next_node]:
+                    distance[next_node] = new_dis
+                    heapq.heappush(min_heapq, (new_dis, ny, nx))
+    answer = distance[(n*n)-1] # -1 보다 이게 읽기 좋은듯? 
+    print(f'Problem {p_num}: {answer}')
+
+p_num = 1
+while True:
+    n = int(input())
+    if n == 0:
+        break
+    rupee_map = [list(map(int, input().split())) for _ in range(n)]
+    dijkstra()
+    p_num += 1
