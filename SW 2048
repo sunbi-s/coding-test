@@ -19,6 +19,8 @@ for test_case_num in range(1, T + 1):
         temp_list = [] # 한줄 저장할 임시 리스트
         while 0 in item:
             item.remove(0) # 0 다 지우고
+        if direction in ['right', 'down']: #벽에 닿는 부분 먼저 작업해야함
+            item.reverse()
         que = deque( item ) # que에 넣고
         while que: # 더 이상 없을때 까지 
             value = que.popleft() # 꺼내서
@@ -26,6 +28,8 @@ for test_case_num in range(1, T + 1):
                 value = value + que.popleft()  #꺼내서 더하고 
             temp_list.append( value ) # 남은게 없거나 둘이 안같으면 그냥 넣음
         zero_list = [ 0 for _ in range(num -len(temp_list) ) ] # 공간 맞추기 용 0 list
+        if direction in ['right', 'down']: #반대로 작업한거 원상복귀
+            temp_list.reverse()
         if direction in ['left','up']: #이동방향이 왼쪽이면
             temp_list = temp_list + zero_list # 오른쪽에  패딩
         else: # 이동방향이 오른쪽이면 이거나 아래쪽이면
