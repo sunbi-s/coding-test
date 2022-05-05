@@ -1,0 +1,23 @@
+import sys
+col ,row = map(int, sys.stdin.readline().split())
+
+def div_counter(col, row):
+    # 종료 조건 (1,1)로 최소단위가 되면 더이상 나누지 않고 종료
+    # 나누지 않았음으로 return 값은 0
+    if col == 1 && row == 1:
+        return 0
+    
+    # 세로 가로 중 더 긴 걸 기준으로 2등분 
+    long = max(col, row)
+    short= min(col, row)
+    
+    # 길이가 2의 배수가 아닌 경우 고려 
+    long_div1 = long//2 + long%2 # 나눠서 긴쪽
+    long_div2 = long//2 #나눠서 짧은쪽
+    
+    # return 값으로는 나눈 횟수를 돌려 줌
+    return 1 + div_counter(long_div1, short) + div_counter(long_div2, short)
+
+ans = div_counter(col, row)
+
+print(ans)
